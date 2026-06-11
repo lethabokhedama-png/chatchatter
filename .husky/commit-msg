@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# chatchatter/.husky/commit-msg
+# Validates commit message format against Conventional Commits spec.
+# Commit types allowed: feat, fix, docs, style, refactor, perf,
+#                       test, build, ci, chore, revert, transport, apk
+#
+# Examples of valid commits:
+#   feat(chat): add offline message queue
+#   fix(transport): handle bluetooth discovery timeout
+#   transport(bluetooth): implement BLE device scanning
+#   apk(android): configure capacitor build pipeline
+#   chore(deps): update socket.io to v4.7.5
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "📝 Validating commit message format..."
+
+npx --no -- commitlint --edit "$1"
+
+echo "✓ Commit message is valid"

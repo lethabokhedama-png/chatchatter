@@ -1,0 +1,5 @@
+                             List of roles
+ Role name |                         Attributes                         
+-----------+------------------------------------------------------------
+ u0_a217   | Superuser, Create role, Create DB, Replication, Bypass RLS
+

@@ -1,24 +1,146 @@
 {
   "name": "chatchatter",
   "version": "1.0.0",
-  "main": "index.ts",
-  "dependencies": {
-    "expo": "~56.0.5",
-    "expo-status-bar": "~56.0.4",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
-    "react-native": "0.85.3",
-    "react-native-web": "^0.21.2"
+  "description": "A fast real-time cross-platform chat app built with Fastify, Socket.IO, Vite, and pnpm supporting LAN, Bluetooth, Wi-Fi Direct, hotspot, and internet messaging.",
+  "private": true,
+  "type": "module",
+  "author": {
+    "name": "LethaboK",
+    "url": "https://github.com/lethabokhedama-png"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lethabokhedama-png/chatchatter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lethabokhedama-png/chatchatter/issues"
+  },
+  "homepage": "https://github.com/lethabokhedama-png/chatchatter#readme",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "echo \"\n⚠  Run 'pnpm run start:dev' to boot all services together\n\" && exit 0",
+
+    "start:dev": "concurrently --kill-others-on-fail --raw --prefix-colors \"bgCyan.bold,bgGreen.bold,bgMagenta.bold\" --names \" CLIENT \",\" SERVER \",\" SHARED \" \"pnpm --filter @chatchatter/client run dev\" \"pnpm --filter @chatchatter/server run dev\" \"pnpm --filter @chatchatter/shared run dev\"",
+    "start:dev:client": "pnpm --filter @chatchatter/client run dev",
+    "start:dev:server": "pnpm --filter @chatchatter/server run dev",
+    "start:dev:shared": "pnpm --filter @chatchatter/shared run dev",
+    "start:dev:server+shared": "concurrently --kill-others-on-fail --prefix-colors \"bgGreen.bold,bgMagenta.bold\" --names \" SERVER \",\" SHARED \" \"pnpm --filter @chatchatter/server run dev\" \"pnpm --filter @chatchatter/shared run dev\"",
+
+    "build": "pnpm run build:shared && pnpm run build:server && pnpm run build:client",
+    "build:client": "pnpm --filter @chatchatter/client run build",
+    "build:server": "pnpm --filter @chatchatter/server run build",
+    "build:shared": "pnpm --filter @chatchatter/shared run build",
+    "build:analyze": "pnpm --filter @chatchatter/client run build:analyze",
+
+    "preview": "pnpm --filter @chatchatter/client run preview",
+    "preview:prod": "pnpm run build && pnpm run preview",
+
+    "lint": "pnpm -r run lint",
+    "lint:fix": "pnpm -r run lint:fix",
+    "lint:staged": "lint-staged",
+    "lint:ci": "pnpm -r run lint -- --max-warnings=0",
+
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,css,yaml,yml}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,css,yaml,yml}\" --ignore-path .gitignore",
+
+    "type:check": "pnpm -r run type:check",
+    "type:check:watch": "pnpm -r --parallel run type:check:watch",
+
+    "test": "pnpm -r run test",
+    "test:watch": "pnpm -r --parallel run test:watch",
+    "test:coverage": "pnpm -r run test:coverage",
+    "test:ci": "pnpm -r run test:coverage -- --reporter=verbose",
+
+    "clean": "pnpm -r exec -- rm -rf dist .cache .turbo tsconfig.tsbuildinfo && echo \"✓ dist and cache cleared\"",
+    "clean:full": "pnpm run clean && pnpm -r exec -- rm -rf node_modules && rm -rf node_modules && echo \"✓ node_modules cleared\"",
+    "clean:install": "pnpm run clean:full && pnpm install && echo \"✓ fresh install complete\"",
+
+    "prepare": "husky install",
+    "commit": "git-cz",
+    "release": "pnpm changeset publish",
+    "version:bump": "pnpm changeset version",
+
+    "transport:select": "node scripts/transport-selector.js",
+
+    "capacitor:init": "pnpm --filter @chatchatter/client run cap:init",
+    "capacitor:sync": "pnpm run build:client && pnpm --filter @chatchatter/client run cap:sync",
+    "capacitor:android": "pnpm --filter @chatchatter/client run cap:android",
+    "apk:debug": "pnpm run capacitor:sync && pnpm --filter @chatchatter/client run apk:debug",
+    "apk:release": "pnpm run build:client && pnpm --filter @chatchatter/client run cap:sync && pnpm --filter @chatchatter/client run apk:release",
+
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down --remove-orphans",
+    "docker:logs": "docker-compose logs -f",
+    "docker:rebuild": "docker-compose down --remove-orphans && docker-compose up -d --build",
+
+    "postinstall": "husky install"
   },
   "devDependencies": {
-    "@types/react": "~19.2.2",
-    "typescript": "~6.0.3"
+    "@changesets/cli": "^2.27.1",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "commitizen": "^4.3.0",
+    "concurrently": "^8.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.2"
   },
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix --max-warnings=0",
+      "prettier --write"
+    ],
+    "**/*.{json,md,css,yaml,yml}": [
+      "prettier --write"
+    ]
   },
-  "private": true
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "feat",
+          "fix",
+          "docs",
+          "style",
+          "refactor",
+          "perf",
+          "test",
+          "build",
+          "ci",
+          "chore",
+          "revert",
+          "transport",
+          "apk"
+        ]
+      ],
+      "subject-max-length": [2, "always", 100],
+      "body-max-line-length": [2, "always", 200]
+    }
+  }
 }

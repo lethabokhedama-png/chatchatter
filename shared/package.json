@@ -1,0 +1,25 @@
+{
+  "name": "@chatchatter/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types/index.ts"
+  },
+  "scripts": {
+    "dev": "tsc --watch --noEmit",
+    "build": "tsc",
+    "type:check": "tsc --noEmit",
+    "type:check:watch": "tsc --noEmit --watch",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.2",
+    "vitest": "^1.6.0"
+  }
+}

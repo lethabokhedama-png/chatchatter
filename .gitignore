@@ -1,41 +1,85 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# chatchatter/.gitignore
 
-# dependencies
+# ── Dependencies ──────────────────────────────────────────────────────────────
 node_modules/
+.pnpm-store/
+.yarn/
 
-# Expo
-.expo/
+# ── Build outputs ─────────────────────────────────────────────────────────────
 dist/
-web-build/
-expo-env.d.ts
-
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro
-.metro-health-check*
-
-# debug
-npm-debug.*
-yarn-debug.*
-yarn-error.*
-
-# macOS
-.DS_Store
-*.pem
-
-# local env files
-.env*.local
-
-# typescript
+build/
+out/
+.cache/
+.turbo/
 *.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+# ── Capacitor / Android / APK ─────────────────────────────────────────────────
+client/android/
+client/ios/
+*.apk
+*.aab
+*.keystore
+*.jks
+release/
+local.properties
+
+# ── Environment — never commit secrets ───────────────────────────────────────
+.env
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.*.local
+# DO commit the example
+!.env.example
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ── Test & Coverage ───────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+*.lcov
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ── Editor ────────────────────────────────────────────────────────────────────
+.vscode/settings.json
+.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+
+# ── SQLite / local DB ─────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Docker ────────────────────────────────────────────────────────────────────
+.docker/
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+.changeset/*.md
+!.changeset/README.md
+tmp/
+temp/

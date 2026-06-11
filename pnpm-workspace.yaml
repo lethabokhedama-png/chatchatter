@@ -1,0 +1,6 @@
+# chatchatter/pnpm-workspace.yaml
+
+packages:
+  - 'client'
+  - 'server'
+  - 'shared'

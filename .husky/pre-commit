@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+# chatchatter/.husky/pre-commit
+# Runs lint-staged before every commit.
+# lint-staged config lives in root package.json under "lint-staged".
+# Files that fail lint or formatting will block the commit — fix them first.
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Run lint-staged (ESLint + Prettier on staged files only)
+pnpm run lint:staged
+
+echo "✓ Pre-commit checks passed"
